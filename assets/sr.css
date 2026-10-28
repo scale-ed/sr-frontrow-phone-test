@@ -1,0 +1,122 @@
+/* ------------------------------------------------------------------
+   Smarter Reviews #1 pick — styles copied from the live theme
+   (top.smarter-reviews.com, captured Oct 28 2026), trimmed to what the
+   #1 product section uses. Mockup additions are at the bottom.
+------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: hidden; overflow-x: clip; }
+body { font-family: "Open Sans", sans-serif; font-size: 16px; line-height: 1.8; color: rgb(44, 48, 56); background: #fff; -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; }
+a { color: inherit; }
+
+.brilliant__background-container { padding-top: 40px; padding-bottom: 140px; letter-spacing: normal; color: rgb(44, 48, 56); }
+.brilliant__background-container.brilliant__background-container--use_background { background-color: rgb(242, 244, 247); }
+.brilliant__container { display: flex; flex-wrap: nowrap; width: 100%; overflow-wrap: anywhere; justify-content: center; }
+.brilliant__middle-column { flex: 1 1 80%; max-width: 780px; background-color: #fff; padding: 32px 40px 40px; border-radius: 8px; }
+.brilliant__container :is(.product-rec__content-text) a { color: rgb(0, 0, 255); text-decoration: underline; }
+
+.product-rec__mobile-badge-container { display: none; }
+.product-rec__section { display: flex; flex-direction: column; padding: 20px; max-width: 100%; margin-left: auto; margin-right: auto; border-top: 3px solid rgb(87, 135, 235); border-radius: 0; scroll-margin-top: 50px; box-shadow: 0 0 0 40px var(--shadow-color); color: rgb(44, 48, 56); }
+.product-rec__row { display: flex; align-items: stretch; justify-content: space-between; }
+.product-rec__column { flex: 1 1 0%; }
+.column-flex-end { display: flex; justify-content: flex-end; }
+.no-left-border { border-right: 0.5px solid rgb(235, 243, 251); border-top: 1px solid rgb(235, 243, 251); border-bottom: 1px solid rgb(235, 243, 251); }
+.no-right-border { border-top: 1px solid rgb(235, 243, 251); border-bottom: 1px solid rgb(235, 243, 251); }
+.extra-padding { padding: 20px 27px; }
+.no-gap { gap: 0 !important; }
+.column-flex-center { display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 20px 0; }
+.product-rec__title, .product-rec__title a { color: #000; font-style: normal; font-weight: 600; margin: 10px 0 0; text-decoration: none; }
+.product-rec__title { font-family: Roboto, sans-serif; font-size: 28px; line-height: 1; }
+.product-rec__title a .product-rec__title-product { color: rgb(0, 0, 255); }
+.product-rec__title a.product-rec__disclaimer-link { margin: 0; }
+.product-rec__title a.product-rec__disclaimer-link sup { font-family: "Open Sans", sans-serif; font-size: 14px; font-weight: 400; border-bottom: 1px solid rgb(68, 68, 68); line-height: 1; top: -15px; position: relative; vertical-align: baseline; }
+.product-rec__subtitle { font-size: 18px; font-style: normal; font-weight: 400; line-height: 28px; margin: 0 0 25px; }
+.product-rec__subtitle a { text-decoration: underline; color: rgb(0, 0, 255); }
+.product-rec__grade { text-align: center; font-size: 72px; font-style: normal; font-weight: 400; line-height: 1.44; margin: 0 0 10px; }
+.product-rec__grade-text { text-align: center; font-size: 16px; font-style: normal; font-weight: 700; line-height: 24px; margin: 0; }
+.product-rec__icon-list-title { margin: 0 0 20px; padding: 0; font-family: Roboto, sans-serif; font-size: 34px; line-height: 1; font-weight: 900; color: rgb(64, 67, 71); }
+.product-rec__content-title { font-family: Rasa, serif; font-size: 26px; line-height: 28.9px; font-weight: 700; margin-top: 0; margin-bottom: 30px; color: rgb(64, 67, 71); }
+.product-rec__content-text { font-size: 16px; font-style: normal; font-weight: 400; line-height: 24px; }
+.product-rec__content-text p { margin: 0 0 20px; }
+.product-rec__content-text strong { font-weight: 700; }
+.product-rec__content-text h3 { font-family: Rasa, serif; font-size: 26px; font-weight: 700; margin: 30px 0; color: rgb(64, 67, 71); }
+.product-rec__content-text h6 { font-size: 12px; line-height: 1.3; font-weight: 400; color: rgb(44, 48, 56); margin: 0 0 12px; }
+.product-rec__image-column { align-self: flex-start; flex: 0 0 113px; }
+.product-rec__image { width: 113px; height: auto; }
+.product-rec__product-image { max-height: 145px; width: auto; height: auto; display: block; }
+.product-rec__icon-list { list-style: none; padding: 0; margin: 0 0 30px; }
+.product-rec__icon-list li { display: flex; align-items: flex-start; margin-bottom: 20px; font-size: 16px; font-style: normal; font-weight: 400; line-height: 1.25; }
+.product-rec__icon-list li p { margin: 0; }
+.product-rec__icon-list li strong { font-weight: 700; }
+.product-rec__icon { width: 24px; height: 24px; margin-right: 10px; flex: 0 0 auto; }
+.product-rec__button-wrapper { text-align: center; display: flex; justify-content: center; padding: 32px 0 0; }
+.product-rec__button-wrapper a { width: 260px; max-width: 90%; }
+.product-rec__button { width: 100%; height: 50px; justify-content: center; align-items: center; cursor: pointer; font-family: Arimo, sans-serif; font-size: 18px; font-weight: 700; line-height: 1; text-transform: capitalize; border: none; border-radius: 50px; display: inline-flex; gap: 0; }
+.product-rec__button i:last-child { margin-right: -10px; }
+.product-rec__chevron-icon svg { width: 25px; height: 25px; display: block; }
+
+@media screen and (max-width: 768px) {
+  body { font-size: 15px; }
+  .brilliant__background-container { padding-top: 5px; padding-bottom: 40px; }
+  .brilliant__container { display: block; }
+  .brilliant__middle-column { padding: 20px 10px 40px; border-radius: 0; }
+  .product-rec__mobile-badge-container { display: flex; justify-content: center; margin-top: calc(-60px - var(--block-padding-top)); }
+  .product-rec__section { padding: 40px 10px; box-shadow: 0 0 0 60px var(--shadow-color); }
+  .mobile-column { flex-direction: column; }
+  .mobile-column .no-left-border { border-right: none; }
+  .extra-padding { padding: 20px 10px; }
+  .product-rec__title { text-align: center; width: 100%; font-size: 24px; }
+  .product-rec__subtitle { text-align: center; font-size: 16px; color: #000; }
+  .product-rec__grade { font-size: 52px; line-height: 52px; }
+  .product-rec__grade-text { font-size: 12px; }
+  .product-rec__icon-list-title { font-size: 26px; line-height: 28.9px; }
+  .column-flex-end { display: none; }
+  .product-rec__row-second { gap: 0; }
+  .product-rec__row-second > * { border-top: 1px solid rgb(235, 243, 251); }
+  .product-rec__row-second > :first-child { border-right: 1px solid rgb(235, 243, 251); }
+  .product-rec__product-image { width: 125px; height: auto; max-height: none; }
+  .product-rec__content-text p { margin-bottom: 15px; }
+  .product-rec__icon-list li img { width: 20px; margin-top: -1px; }
+  .product-rec__button-wrapper { padding: 36px 0 0; }
+  .product-rec__button i:last-child { display: none; }
+}
+
+/* ------------------------------------------------------------------
+   MOCKUP ADDITIONS — FrontrowMD widget in the #1 pick (Figma Version 3)
+------------------------------------------------------------------- */
+
+/* Widget row: between the product name row and the image + grade row, left-aligned. */
+.frontrow-row { --s: 1; padding: 16px 0 4px; }
+.frontrow-box { width: calc(437px * var(--s)); height: calc(78px * var(--s)); }
+/* The widget is a fixed 437 x 78 iframe; it is scaled, never resized (same as the LiverMD PDP). */
+.frontrow-sticker { display: block; width: 437px; height: 78px; border: 0; overflow: hidden; transform: scale(var(--s)); transform-origin: 0 0; transition: width .3s ease-in-out; background: transparent; }
+.frontrow-sticker.is-min { width: 40px; }
+
+/* Desktop: 100%. Overall grade sits at the bottom of the row. */
+@media screen and (min-width: 769px) {
+  .product-rec__column-grade { justify-content: flex-end; }
+  /* Mockup only: no content above the #1 pick here, so drop the gap the live page has. */
+  .brilliant__middle-column { padding-top: 0; }
+  #no_one_product_anchor { margin-top: 40px !important; }
+}
+
+/* Mobile: 90% (same scale the LiverMD PDP uses). */
+@media screen and (max-width: 768px) {
+  .frontrow-row { --s: 0.9; padding: 8px 0 4px; }
+  /* Default (Figma): cut off at the card edge. */
+  html[data-fit="crop"] .frontrow-row { overflow: hidden; }
+  /* Option: allowed past the card's inner padding; only the screen edge cuts it. */
+  html[data-fit="extend"] .frontrow-row { overflow: visible; }
+}
+
+/* FrontrowMD modal host (same rules the LiverMD PDP uses for the modal iframe) */
+.frontrow-modal { display: none; position: fixed; inset: 0; z-index: 99999997; width: 100%; height: 100%; border: 0; overflow: hidden; }
+.frontrow-modal.is-open { display: block; }
+
+/* Test controls (not part of the design) */
+.test-bar { font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #1c2b43; color: #fff; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.test-bar strong { font-weight: 600; }
+.test-bar .group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.test-bar a { color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.test-bar a.is-active { background: #fff; color: #1c2b43; border-color: #fff; }
+.test-bar .readout { opacity: .75; }

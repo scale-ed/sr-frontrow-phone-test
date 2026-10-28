@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<!-- MOCKUP: FrontrowMD "sticker" widget markup captured from 1md.org/products/livermd (Oct 28 2026), recolored and re-worded for the SR phone test. The real widget is served by FrontrowMD. -->
+<html><head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- open sans and lora fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&amp;family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+    <style>
+      /* GENERAL STYLES */
+      html, body { height: fit-content; overflow: hidden;}
+
+      body[data-state="min"], body[data-state="max"] {
+        margin: 0;
+      }
+
+      body[data-state="max"] #maximized {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-start;
+        overflow: hidden;
+
+        width: 437px;
+      }
+
+      body[data-state="max"] #minimized {
+        display: none;
+      }
+
+      body * {
+        font-family: 'Open sans', serif;
+      }
+
+      .test-mode-floating-badge {
+        position: absolute;
+        padding: 4px 10px;
+        background: #10B981;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        color: white;
+        letter-spacing: 0.5px;
+        z-index: 10;
+        white-space: nowrap;
+      }
+
+      p {
+        margin: 0;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+      }
+
+      button {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+
+      img {
+        position: relative;
+      }
+
+      .bold { display: inline; font-weight: 600; }
+      .italics { display: inline; font-style: italic; }
+
+      /* HEADER */
+      .heading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .heading > p {
+        text-align: center;
+        font-family: 'Lora', serif;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 21px;
+        letter-spacing: 0.2px;
+      }
+
+        .heading > p {
+          font-size: 16px;
+        }
+
+      .heading > span > svg, .heading > span {
+        height: 40px;
+        width: auto;
+      }
+
+      /* MAIN SECTION */
+      #maximized {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity .3s ease-out, visibility .3s ease-out, width .3s ease-in-out;
+        padding-right: 10px;
+      }
+
+      #maximized * {
+        transition: opacity .3s ease-out;
+      }
+
+      body[data-state="min"] #maximized,
+      body[data-state="min"] #maximized * {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      body[data-state="max"] #maximized,
+      body[data-state="max"] #maximized * {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .background {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 387px;
+        padding: 8px 0px 10px 8px;
+        gap: 10px;
+
+        z-index: 1;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      /* CTAs */
+      .cta {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .images {
+        height: 18px;
+      }
+
+      .learn-more {
+        text-decoration-line: underline;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+      }
+
+      .testimonial-cta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .testimonial-cta > p {
+        font-weight: 600;
+      }
+
+      .testimonial-cta > p:hover {
+        text-decoration-line: underline;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+      }
+
+      /* RIBBON TAILS */
+      .ribbon-tails {
+        height: 78px;
+        z-index: -1;
+      }
+
+      .ribbon-tails svg {
+        position: absolute;
+        right: 0;
+        width: 35px;
+        height: 55px;
+      }
+
+      .ribbon-tails svg:first-of-type {
+        top: 0;
+      }
+
+      .ribbon-tails svg:last-of-type {
+        bottom: 0;
+      }
+
+      .ribbon-body {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: calc(100% - 32px);
+        height: 100%;
+      }
+
+      /* CLOSE BUTTON */
+      .close-button {
+        display: flex;
+        padding: 6px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 3;
+
+        justify-self: flex-start;
+        align-self: flex-start;
+        margin-top: 5px;
+
+        border-radius: 68px;
+        background: #E0E0E0;
+      }
+
+      /* MINIMIZED */
+      .minimized {
+        height: 78px;
+        width: 40px;
+        position: absolute;
+        z-index: 2;
+      }
+
+      /* CUSTOM STYLES (mockup: FrontrowMD configures these hex values on their end) */
+      .background, .ribbon-body { background: #32457A; }
+      .ribbon-tails svg path { stroke: transparent; fill: #32457A; }
+      img { border: 2px #32457A solid; }
+      .heading svg path { stroke: transparent; fill: #FFFFFF; }
+      p, .heading > p, .testimonial-cta > p { color: #FFFFFF; }
+      .learn-more, .testimonial-cta > p { text-decoration-color: #FFFFFF; }
+    </style>
+    <script>
+      function getSafeUrl() {
+        try {
+          return window?.parent?.location?.href || window?.location?.href || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function frTrack(event, opts = {}) {
+        try {
+          window.parent.postMessage({
+            name: 'TRACK_FMD_EVENT',
+            widgetId: 5943,
+            eventName: event,
+            properties: {
+              ...opts,
+              showTestimonialCta: false,
+              testimonialCtaOpensModal: false,
+              healthBrandProductId: 3845,
+              bundleId: null,
+              presentationType: 'sticker',
+              url: getSafeUrl(),
+              widget_version: '2',
+              is_sticky: false
+            }
+          }, '*');
+        } catch (e) {}
+      }
+
+      function scrollToTestimonials(e) {
+        try {
+          e.stopPropagation();
+          window.parent.postMessage("SCROLL_TO_TESTIMONIALS", "*");
+        } catch (e) {
+          console.error('Error scrolling to testimonials:', e);
+        }
+      }
+
+      function clickShowAll(e) {
+        try {
+          e.stopPropagation();
+          window.parent.postMessage({name: "OPEN_TESTIMONIALS_MODAL", source: "widget_click_read_why_they_did"}, "*");
+        } catch (e) {
+          console.error('Error showing all:', e);
+        }
+      }
+
+      function openFrontrowModal(){
+        try {
+          window.parent.postMessage("OPEN_MODAL_STICKER", "*");
+        } catch (e) {
+          console.error('Error opening modal:', e);
+        }
+      }
+
+      function toggle() {
+        if (document.body.dataset.state === "max") {
+          document.getElementById("maximized").style.opacity = "0";
+          document.getElementById("maximized").style.width = "0";
+          document.getElementById("minimized").style.display = "flex";
+
+          window.parent.postMessage("TOGGLE_STICKER", "*");
+          setTimeout(() => {
+            document.body.dataset.state = "min";
+            document.getElementById("maximized").style.display = "none";
+          }, CONFIG.TOGGLE_DELAY);
+        } else {
+          document.getElementById("minimized").style.display = "none";
+          document.getElementById("maximized").style.display = "flex";
+          document.getElementById("maximized").style.removeProperty("width");
+          document.getElementById("maximized").style.opacity = "1";
+
+          window.parent.postMessage("TOGGLE_STICKER", "*");
+          setTimeout(() => {
+            document.body.dataset.state = "max";
+          }, CONFIG.TOGGLE_DELAY);
+        }
+      }
+
+      const CONFIG = {
+        MAX_RETRIES: 3,
+        TOGGLE_DELAY: 300, // ms
+        RETRY_DELAY: 500 // ms
+      };
+
+      const state = {
+        isUpdating: false,
+        retryCount: 0,
+        isInitialized: false
+      };
+
+      function handleOnLoad() {
+        if (state.isInitialized) {
+          return;
+        }
+
+        window.parent.postMessage({ name: "STICKER_REQUEST_READY_STATUS" }, "*");
+
+        window.addEventListener("message", function initListener(event) {
+          if (event.data?.name === "PARENT_READY") {
+            window.removeEventListener("message", initListener);
+            if (state.isUpdating) {
+              return;
+            }
+            state.isUpdating = true;
+
+            document.fonts.ready.then(() => {
+              window.parent.postMessage({ name: "RESIZE_STICKER" }, "*");
+              state.isInitialized = true;
+
+              setTimeout(() => {
+                state.isUpdating = false;
+              }, CONFIG.UPDATE_DELAY);
+            }).catch((error) => {
+              handleOnLoad();
+            });
+          }
+        });
+
+        setTimeout(() => {
+          if (!state.isInitialized && state.retryCount < CONFIG.MAX_RETRIES) {
+            state.retryCount++;
+            handleOnLoad();
+          }
+        }, CONFIG.RETRY_DELAY);
+      }
+
+      window.addEventListener("message", ev => {
+        if (ev.data?.name === "STICKER_RESIZED") {
+          document.body.style.display = "flex";
+        }
+      });
+    </script>
+  </head>
+  <body data-state="max" style="display: flex;" onload="handleOnLoad()">
+    <!-- Don't show if not at or above provider threshold -->
+      <div id="maximized" class="minimize">
+        <div class="background">
+          <div class="heading">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="35" viewBox="0 0 17 35" fill="none">
+  <path d="M2.60396 10.0782C2.63019 12.7275 5.0681 14.8472 5.0681 14.8472C5.0681 14.8472 7.46457 12.6717 7.43993 10.0222C7.41325 7.3697 4.97398 5.25178 4.97398 5.25178C4.97398 5.25178 2.57932 7.42863 2.60396 10.0782ZM1.34556 19.1722C2.78927 21.3977 5.99278 21.9007 5.99278 21.9007C5.99278 21.9007 6.85625 18.7951 5.41254 16.5696C3.96883 14.3441 0.763495 13.8397 0.763495 13.8397C0.763495 13.8397 -0.0997442 16.9469 1.34556 19.1722ZM3.82901 27.3622C6.16621 28.6381 9.23028 27.5709 9.23028 27.5709C9.23028 27.5709 8.50337 24.4335 6.16618 23.1576C3.82898 21.8817 0.764911 22.9489 0.764911 22.9489C0.764911 22.9489 1.49182 26.0862 3.82901 27.3622ZM10.5368 33.3638C13.0903 34.1327 15.868 32.4611 15.868 32.4611C15.868 32.4611 14.504 29.5425 11.9502 28.772C9.39665 28.0031 6.62082 29.6761 6.62082 29.6761C6.62082 29.6761 7.98323 32.5949 10.5368 33.3638ZM9.02056 3.29033C7.3448 5.35644 7.8659 8.53241 7.8659 8.53241C7.8659 8.53241 11.1079 8.36114 12.7836 6.29503C14.4594 4.22891 13.9381 1.05136 13.9381 1.05136C13.9381 1.05136 10.6963 1.22421 9.02056 3.29033Z" stroke="#212121" stroke-linecap="round"></path>
+</svg>
+
+            </span>
+            <p>Clinicians' <br>
+              Choice</p>
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="35" viewBox="0 0 17 35" fill="none">
+  <path d="M14.1756 10.0782C14.1494 12.7275 11.7114 14.8472 11.7114 14.8472C11.7114 14.8472 9.31497 12.6717 9.33961 10.0222C9.36629 7.3697 11.8056 5.25178 11.8056 5.25178C11.8056 5.25178 14.2002 7.42863 14.1756 10.0782ZM15.434 19.1722C13.9903 21.3977 10.7868 21.9007 10.7868 21.9007C10.7868 21.9007 9.92329 18.7951 11.367 16.5696C12.8107 14.3441 16.016 13.8397 16.016 13.8397C16.016 13.8397 16.8793 16.9469 15.434 19.1722ZM12.9505 27.3622C10.6133 28.6381 7.54926 27.5709 7.54926 27.5709C7.54926 27.5709 8.27617 24.4335 10.6134 23.1576C12.9506 21.8817 16.0146 22.9489 16.0146 22.9489C16.0146 22.9489 15.2877 26.0862 12.9505 27.3622ZM6.24277 33.3638C3.68923 34.1327 0.911591 32.4611 0.911591 32.4611C0.911591 32.4611 2.27559 29.5425 4.82935 28.772C7.38289 28.0031 10.1587 29.6761 10.1587 29.6761C10.1587 29.6761 8.79631 32.5949 6.24277 33.3638ZM7.75898 3.29033C9.43474 5.35644 8.91365 8.53241 8.91365 8.53241C8.91365 8.53241 5.67166 8.36114 3.9959 6.29503C2.32014 4.22891 2.84146 1.05136 2.84146 1.05136C2.84146 1.05136 6.08322 1.22421 7.75898 3.29033Z" stroke="#212121" stroke-linecap="round"></path>
+</svg>
+
+            </span>
+          </div>
+          <div class="column">
+            <p>
+              <span class="bold">1,700+ clinicians</span> share this on <span class="italics">FrontrowMD</span> without compensation.
+            </p>
+            <div class="cta">
+              <span class="images">
+  <img src="https://assets.app.thefrontrowhealth.com/pj9v0p0n0npm1g4i8khguppo0sou" alt="Dr. Preeti Kallu, MD" style="z-index: 0;">
+  <img src="https://assets.app.thefrontrowhealth.com/jijjnma3wz2ktevmvpuoewdnubm0" alt="Dr. Kimberly Rogers, MD" style="z-index: 1;">
+    <img src="https://assets.app.thefrontrowhealth.com/pa8nliuewz7t7g0dmxjawwf0kr5a" alt="Dr. Green" style="z-index: 2;">
+</span>
+<style>
+  img {
+      width: 16px;
+      height: 16px;
+
+    border-radius: 100px;
+    object-fit: cover;
+    background-color: #eee;
+  }
+
+
+    img:nth-of-type(2), img:nth-of-type(3) {
+      margin-left: -10px;
+    }
+</style>
+
+                <button style="margin-top: -2px" class="learn-more" onclick="openFrontrowModal()" aria-label="Click to learn more about the clinicians sharing this product">
+                  <p>View clinicians &amp; learn more</p>
+                </button>
+            </div>
+          </div>
+        </div>
+        <button class="close-button" onclick="toggle()" id="close-button" aria-label="Click to minimize banner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+            <path d="M1 5.5L0.5 5L2.5 3L0.5 1L1 0.5L3 2.5L5 0.5L5.5 1L3.5 3L5.5 5L5 5.5L3 3.5L1 5.5Z" fill="#212121"></path>
+          </svg>
+        </button>
+      </div>
+      <div id="minimized">
+        <button class="minimized" onclick="toggle()" aria-label="Click to open banner">
+        </button>
+      </div>
+      <div class="ribbon-tails" id="ribbon">
+        <span class="ribbon-body"></span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="55" viewBox="0 0 35 55" fill="none">
+          <path d="M6.22738 53.1828C4.70359 55.8577 0.620657 54.7763 0.620658 51.6978L0.620659 3.04114C0.620659 1.38431 1.96378 0.0411848 3.62061 0.0411847L31.3383 0.0411841C33.64 0.0411841 35.0843 2.5262 33.9451 4.52615L6.22738 53.1828Z" fill="#1C2B43"></path>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="55" viewBox="0 0 35 55" fill="none">
+          <path d="M6.42748 1.98895C4.91635 -0.705341 0.810919 0.367404 0.810919 3.45655L0.810917 51.9593C0.810917 53.6162 2.15404 54.9593 3.81087 54.9593L31.0144 54.9593C33.3072 54.9593 34.7526 52.4915 33.631 50.4917L6.42748 1.98895Z" fill="#1C2B43"></path>
+        </svg>
+      </div>
+  
+
+</body></html>
