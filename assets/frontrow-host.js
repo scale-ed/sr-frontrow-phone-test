@@ -17,8 +17,8 @@
   });
 
   var modal = document.getElementById('frontrow-modal');
-  function openModal() { modal.classList.add('is-open'); document.documentElement.style.overflow = 'hidden'; }
-  function closeModal() { modal.classList.remove('is-open'); document.documentElement.style.overflow = ''; }
+  function openModal() { if (!modal) return; modal.classList.add('is-open'); document.documentElement.style.overflow = 'hidden'; }
+  function closeModal() { if (!modal) return; modal.classList.remove('is-open'); document.documentElement.style.overflow = ''; }
 
   function stickerFor(win) {
     return Array.prototype.find.call(document.querySelectorAll('iframe.frontrow-sticker'), function (f) { return f.contentWindow === win; });
