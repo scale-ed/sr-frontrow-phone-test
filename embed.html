@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>FrontrowMD widget</title>
+  <!-- One FrontrowMD embed per page: ?type=quant|sticker|brand-badge|brand-banner|qual&id=<product_id>&w=<px>.
+       FrontrowMD's scripts look up fixed element ids and each sets up its own modal, so widgets.html
+       loads every widget through this page in its own frame. Markup and CSS are FrontrowMD's dashboard code. -->
+  <style>
+    html, body { margin: 0; background: #fff; }
+    body { padding: 12px 0 16px; }
+    .slot { margin: 0 auto; }
+
+    /* Clinicians' Choice (quant) */
+    #iframe-frontrow-quant { height: 0px; }
+    #frontrow-badge { position: relative; display: flex; }
+    .iframe-frontrow { width: 100%; margin: 0; }
+    .iframe-modal-frontrow { display: none; position: fixed; z-index: 99999999; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
+
+    /* Brand badge (brand, #iframe-frontrow-brand) */
+    #iframe-frontrow-brand { height: 0px; }
+
+    /* Banner (sticker) — "on image", so it sits in a positioned box here */
+    .sticker-slot { position: relative; height: 98px; overflow: hidden; }
+    #frontrow-sticker { position: absolute; z-index: 3; border-radius: 0 !important; }
+
+    /* Brand banner (brand, #frontrow-brand-badge) */
+    .brand-banner-slot { position: relative; height: 98px; overflow: hidden; }
+    .iframe-frontrow-brand-badge { position: absolute; top: 10px; left: 0; z-index: 3; border-radius: 0 !important; }
+
+    /* Clinician Reviews (qual) */
+    iframe.iframe-frontrow-testimonials { width: 100%; }
+    iframe.iframe-modal-testimonials { z-index: 99999998; }
+
+    .iframe.frontrow { display: none; position: fixed; left: 0; top: 0; z-index: 99999997; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden; }
+    .error { font: 14px sans-serif; color: #b00020; padding: 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="slot" id="slot"></div>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var type = q.get('type'), id = (q.get('id') || '').replace(/\D/g, ''), w = parseInt(q.get('w'), 10);
+      var slot = document.getElementById('slot');
+      if (w) slot.style.width = w + 'px';
+
+      var api = 'https://app.thefrontrowhealth.com/api/widgets';
+      function src(pt, script) { return api + (script ? '/script' : '') + '?presentation_type=' + pt + '&product_id=' + id; }
+
+      var pt, html;
+      switch (type) {
+        case 'quant':
+          pt = 'quant';
+          html = '<div id="frontrow-badge"><iframe class="iframe-frontrow" id="iframe-frontrow-quant" title="FrontrowMD Clinicians\' Choice Badge" frameborder="0" src="' + src(pt) + '"></iframe></div>';
+          break;
+        case 'sticker':
+          pt = 'sticker';
+          html = '<div class="sticker-slot"><iframe data-state="max" class="iframe-frontrow-sticker" id="frontrow-sticker" title="FrontrowMD Clinicians\' Choice Banner" frameborder="0" src="' + src(pt) + '"></iframe></div>';
+          break;
+        case 'brand-badge':
+          pt = 'brand';
+          html = '<div id="frontrow-badge"><iframe class="iframe-frontrow" id="iframe-frontrow-brand" title="FrontrowMD Clinicians\' Choice Badge" frameborder="0" src="' + src(pt) + '"></iframe></div>';
+          break;
+        case 'brand-banner':
+          pt = 'brand';
+          html = '<div class="brand-banner-slot"><iframe data-state="max" class="iframe-frontrow-brand-badge" id="frontrow-brand-badge" title="FrontrowMD Brand Banner" frameborder="0" src="' + src(pt) + '"></iframe></div>';
+          break;
+        case 'qual':
+          pt = 'qual';
+          html = '<section class="fr-testimonials"><iframe id="frontrow-testimonials" class="iframe-frontrow-testimonials" title="FrontrowMD Clinician Reviews" frameborder="0" src="' + src(pt) + '"></iframe></section>';
+          break;
+      }
+      if (!pt || !id) { slot.innerHTML = '<p class="error">Unknown widget type or product id.</p>'; return; }
+
+      slot.innerHTML = html;
+      var widget = slot.querySelector('iframe');
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = src(pt, true);
+      document.body.appendChild(s);
+
+      // FrontrowMD's script sends PARENT_READY once, when it loads; a widget that hasn't loaded yet misses it
+      // and falls back to a slow retry. Resend it (the same message the script sends) once both have loaded.
+      var scriptLoaded = false, widgetLoaded = false;
+      function sendReady() { if (scriptLoaded && widgetLoaded) widget.contentWindow.postMessage({ name: 'PARENT_READY' }, '*'); }
+      s.addEventListener('load', function () { scriptLoaded = true; sendReady(); });
+      widget.addEventListener('load', function () { widgetLoaded = true; sendReady(); });
+
+      // Tell the gallery how tall this widget is.
+      function report() {
+        if (parent !== window) parent.postMessage({ frEmbedHeight: document.body.scrollHeight, frEmbed: location.search }, '*');
+      }
+      new ResizeObserver(report).observe(document.body);
+      setInterval(report, 1500);
+    })();
+  </script>
+</body>
+</html>

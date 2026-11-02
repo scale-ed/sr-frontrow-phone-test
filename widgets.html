@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>FrontrowMD widget gallery</title>
+  <style>
+    body { margin: 0; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1c2b43; background: #f2f4f7; }
+    header { background: #1c2b43; color: #fff; padding: 12px 16px; position: sticky; top: 0; z-index: 10; }
+    header h1 { font-size: 17px; margin: 0 0 6px; }
+    header .controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+    header a, header button { font: inherit; color: #fff; background: none; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: 3px 10px; cursor: pointer; text-decoration: none; }
+    header button.is-active { background: #fff; color: #1c2b43; border-color: #fff; }
+    main { padding: 16px; max-width: 1480px; margin: 0 auto; }
+    section { margin: 0 0 28px; }
+    h2 { font-size: 18px; margin: 0 0 2px; }
+    .meta { margin: 0 0 12px; font-size: 13px; color: #5f6773; }
+    .meta code { background: #e3e8ef; border-radius: 4px; padding: 1px 5px; font-size: 12px; color: #1c2b43; }
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .tile { background: #fff; border: 1px solid #e0e6f0; border-radius: 10px; padding: 10px 12px 8px; box-sizing: content-box; }
+    .tile-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; margin: 0 0 4px; }
+    .tile-head strong { font-size: 14px; }
+    .tile-head a { color: #5f6773; white-space: nowrap; }
+    .tile iframe { display: block; border: 0; width: 100%; height: 120px; background: #fff; }
+    .tile .note { font-size: 12px; color: #8a919c; margin: 4px 0 0; }
+    details summary { cursor: pointer; font-size: 14px; color: #1c2b43; margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FrontrowMD widgets — 1MD Nutrition</h1>
+    <div class="controls">
+      <strong>Width:</strong>
+      <button data-w="335">Phone card · 335px</button>
+      <button data-w="437">1md.org PDP · 437px</button>
+      <button data-w="660">Desktop card · 660px</button>
+      <a href="index.html">SR test pages</a>
+    </div>
+  </header>
+
+  <main id="gallery"></main>
+
+  <script>
+    // Every embed code from the FrontrowMD dashboard (Implementation page) plus the two "brand" codes we were
+    // sent separately. Each widget loads alone in embed.html, in its own frame.
+    var PRODUCTS = { 3849: 'CholestMD', 3852: 'OsteoMD', 3845: 'LiverMD', 3856: 'VisionMD', 7003: 'CholestMD (heart-health collection URL)' };
+    var SECTIONS = [
+      { type: 'quant', title: "Clinicians' Choice — Embedded Badge", code: 'presentation_type=quant',
+        meta: 'Dashboard: “Clinicians’ Choice”. Best practice per FrontrowMD: below the 5-star reviews or near the description.',
+        ids: [3849, 3852, 3845, 7003], notes: { 7003: 'Renders empty (0px tall) when loaded.' } },
+      { type: 'sticker', title: "Clinicians' Choice — Banner Badge (on image)", code: 'presentation_type=sticker',
+        meta: 'Dashboard: “Banner”. Positioned on the product image; the script scales it to 90% of its container.',
+        ids: [3849, 3852, 3845] },
+      { type: 'brand-badge', title: "Brand badge", code: 'presentation_type=brand · #iframe-frontrow-brand',
+        meta: 'Sent separately; not on the dashboard’s Implementation page.', ids: [3845] },
+      { type: 'brand-banner', title: "Brand banner", code: 'presentation_type=brand · #frontrow-brand-badge',
+        meta: 'Sent separately; not on the dashboard’s Implementation page. The script scales it to 90% of its container.', ids: [3852] },
+      { type: 'qual', title: 'Clinician Reviews', code: 'presentation_type=qual',
+        meta: 'Dashboard: “Clinician Reviews”. Full section, not a banner — best practice per FrontrowMD: above the customer reviews. Only LiverMD, OsteoMD and VisionMD have it.',
+        ids: [3845, 3852, 3856], collapsed: true }
+    ];
+
+    var width = 335;
+    try { width = parseInt(new URLSearchParams(location.search).get('w'), 10) || 335; } catch (e) {}
+
+    var gallery = document.getElementById('gallery');
+    var frames = [];
+
+    function embedUrl(type, id, w) { return 'embed.html?type=' + type + '&id=' + id + '&w=' + w; }
+
+    SECTIONS.forEach(function (sec) {
+      var el = document.createElement('section');
+      el.innerHTML = '<h2>' + sec.title + '</h2><p class="meta"><code>' + sec.code + '</code> ' + sec.meta + '</p>';
+      var grid = document.createElement('div');
+      grid.className = 'grid';
+      sec.ids.forEach(function (id) {
+        var tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.innerHTML = '<div class="tile-head"><span><strong>' + PRODUCTS[id] + '</strong> · ' + id + '</span>' +
+          '<a target="_blank" rel="noopener">Open alone ↗</a></div>' +
+          '<iframe title="' + sec.title + ' — ' + PRODUCTS[id] + '" loading="lazy"></iframe>' +
+          (sec.notes && sec.notes[id] ? '<p class="note">' + sec.notes[id] + '</p>' : '');
+        var f = tile.querySelector('iframe');
+        frames.push({ frame: f, tile: tile, link: tile.querySelector('a'), type: sec.type, id: id, lazy: !!sec.collapsed });
+        grid.appendChild(tile);
+      });
+      if (sec.collapsed) {
+        var d = document.createElement('details');
+        d.innerHTML = '<summary>Show Clinician Reviews (tall)</summary>';
+        d.appendChild(grid);
+        d.addEventListener('toggle', function () { if (d.open) load(); });
+        el.appendChild(d);
+      } else {
+        el.appendChild(grid);
+      }
+      gallery.appendChild(el);
+    });
+
+    function load() {
+      frames.forEach(function (x) {
+        x.tile.style.width = width + 'px';
+        var url = embedUrl(x.type, x.id, width);
+        x.link.href = url;
+        var open = !x.lazy || x.tile.closest('details').open;
+        if (open && x.frame.getAttribute('src') !== url) { x.frame.style.height = '120px'; x.frame.src = url; }
+      });
+      document.querySelectorAll('button[data-w]').forEach(function (b) { b.classList.toggle('is-active', +b.dataset.w === width); });
+    }
+
+    document.querySelectorAll('button[data-w]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        width = +b.dataset.w;
+        try { history.replaceState(null, '', '?w=' + width); } catch (e) {}
+        load();
+      });
+    });
+
+    // Each embed reports its height.
+    window.addEventListener('message', function (ev) {
+      var h = ev.data && ev.data.frEmbedHeight;
+      if (!h) return;
+      frames.forEach(function (x) { if (x.frame.contentWindow === ev.source) x.frame.style.height = h + 'px'; });
+    });
+
+    load();
+  </script>
+</body>
+</html>
