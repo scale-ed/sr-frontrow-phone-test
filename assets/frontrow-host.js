@@ -1,41 +1,45 @@
-/* Mockup host for the FrontrowMD sticker.
-   Test-bar controls: crop/extend fit option and the width readout. */
+/* Mockup host for the FrontrowMD embeds.
+   Test-bar controls: which banner to load (?banner=badge|banner) and the width readout. */
 (function () {
   var params = new URLSearchParams(location.search);
-  var fit = params.get('fit') === 'extend' ? 'extend' : 'crop';
-  document.documentElement.setAttribute('data-fit', fit);
+  var banner = params.get('banner') === 'banner' ? 'banner' : 'badge';
 
-  // Keep the fit option when switching products.
-  document.querySelectorAll('a[data-keep-fit]').forEach(function (a) {
+  // Keep the banner option when switching products.
+  document.querySelectorAll('a[data-keep-params]').forEach(function (a) {
     var url = new URL(a.getAttribute('href'), location.href);
-    url.searchParams.set('fit', fit);
+    url.searchParams.set('banner', banner);
     a.setAttribute('href', url.pathname.split('/').pop() + url.search);
   });
-  document.querySelectorAll('a[data-fit]').forEach(function (a) {
-    if (a.getAttribute('data-fit') === fit) a.classList.add('is-active');
+  document.querySelectorAll('a[data-banner]').forEach(function (a) {
+    if (a.getAttribute('data-banner') === banner) a.classList.add('is-active');
   });
 
-  // FrontrowMD's own script (loaded with the sticker) handles the widget's messages and modal.
+  // Load the chosen embed. Scripts cloned from a <template> are re-created so they run.
+  // FrontrowMD's script then handles the widget's messages and modal.
+  var row = document.getElementById('frontrow-row');
+  var tpl = row && row.querySelector('template[data-banner="' + banner + '"]');
+  if (tpl) {
+    var node = document.importNode(tpl.content, true);
+    node.querySelectorAll('script').forEach(function (old) {
+      var s = document.createElement('script');
+      Array.prototype.forEach.call(old.attributes, function (at) { s.setAttribute(at.name, at.value); });
+      old.parentNode.replaceChild(s, old);
+    });
+    row.appendChild(node);
+  }
 
-  // Readout: screen width and how much of the widget is visible.
+  // Readout: screen width and the widget's rendered size.
   var out = document.getElementById('readout');
   function updateReadout() {
-    if (!out) return;
-    var f = document.getElementById('frontrow-sticker');
-    if (!f) return;
+    if (!out || !row) return;
+    var f = row.querySelector('iframe');
+    if (!f || !f.offsetWidth) return;
     var r = f.getBoundingClientRect();
-    var row = f.closest('.frontrow-row');
-    var limit = window.innerWidth;
-    if (fit === 'crop' && row && getComputedStyle(row).overflow === 'hidden') {
-      var rr = row.getBoundingClientRect();
-      limit = Math.min(limit, rr.right);
-    }
-    var hidden = Math.max(0, Math.round(r.right - limit));
     var scale = Math.round((r.width / f.offsetWidth) * 100);
-    out.textContent = 'Screen ' + window.innerWidth + 'px · widget ' + scale + '% · ' + (hidden ? hidden + 'px cut off' : 'fully visible');
+    out.textContent = 'Screen ' + window.innerWidth + 'px · widget ' + Math.round(r.width) + 'px wide (' + scale + '%)';
   }
   window.addEventListener('resize', updateReadout);
   window.addEventListener('load', updateReadout);
-  setTimeout(updateReadout, 600);
-  setTimeout(updateReadout, 2500); // after FrontrowMD scales the sticker
+  setTimeout(updateReadout, 2500); // after FrontrowMD sizes the widget
+  setTimeout(updateReadout, 8000);
 })();

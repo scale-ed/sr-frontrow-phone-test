@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-fit="crop">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,12 +13,12 @@
 <body>
   <nav class="test-bar" aria-label="Test controls">
     <div class="group"><strong>#1 pick:</strong>
-      <a href="cholestmd.html" data-keep-fit>CholestMD</a>
-      <a href="osteomd.html" data-keep-fit class="is-active">OsteoMD</a>
+      <a href="cholestmd.html" data-keep-params>CholestMD</a>
+      <a href="osteomd.html" data-keep-params class="is-active">OsteoMD</a>
     </div>
-    <div class="group"><strong>Mobile widget:</strong>
-      <a href="?fit=crop" data-fit="crop">Cut at card edge</a>
-      <a href="?fit=extend" data-fit="extend">Extend past card padding</a>
+    <div class="group"><strong>Banner:</strong>
+      <a href="?banner=badge" data-banner="badge">Clinicians' Choice badge</a>
+      <a href="?banner=banner" data-banner="banner">Brand banner</a>
     </div>
     <span class="readout" id="readout"></span>
   </nav>
@@ -45,12 +45,23 @@
             </div>
           </div>
 
-          <!-- FrontrowMD — Clinicians' Choice brand badge (live embed, product_id=3845) -->
-          <div class="frontrow-row">
-            <div id="frontrow-badge">
-              <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=brand&amp;product_id=3845"></script>
-              <iframe class="iframe-frontrow" id="iframe-frontrow-brand" title="FrontrowMD Clinicians' Choice Badge" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=brand&amp;product_id=3845"></iframe>
-            </div>
+          <!-- FrontrowMD — live embeds. Only one loads per page (test bar "Banner:" switch, ?banner=badge|banner),
+               since both share FrontrowMD's modal script. -->
+          <div class="frontrow-row" id="frontrow-row">
+            <template data-banner="badge">
+              <!-- Clinicians' Choice brand badge (product_id=3845) -->
+              <div id="frontrow-badge">
+                <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=brand&amp;product_id=3845"></script>
+                <iframe class="iframe-frontrow" id="iframe-frontrow-brand" title="FrontrowMD Clinicians' Choice Badge" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=brand&amp;product_id=3845"></iframe>
+              </div>
+            </template>
+            <template data-banner="banner">
+              <!-- Brand banner (product_id=3852) -->
+              <div class="frontrow-brand-slot">
+                <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=brand&amp;product_id=3852"></script>
+                <iframe data-state="max" class="iframe-frontrow-brand-badge" id="frontrow-brand-badge" title="FrontrowMD Brand Banner" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=brand&amp;product_id=3852"></iframe>
+              </div>
+            </template>
           </div>
 
           <!-- Second Row -->
