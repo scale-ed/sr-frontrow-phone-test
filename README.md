@@ -17,3 +17,7 @@ Static mockup of the Smarter Reviews #1 pick (CholestMD and OsteoMD) with the Fr
 - `frontrow/` — copies of FrontrowMD's sticker and modal markup from the LiverMD PDP, recolored to #32457A with the SR copy
 
 Images, fonts and the widget avatars load from their live URLs, so the pages need an internet connection.
+
+## Updating
+
+GitHub Pages lets browsers cache `assets/` files for 10 minutes. After changing `assets/sr.css` or `assets/frontrow-host.js`, bump the `?v=` on their links in `cholestmd.html` and `osteomd.html` so phones load the new copy.
