@@ -19,6 +19,7 @@
     <div class="group"><strong>Banner:</strong>
       <a href="?banner=badge" data-banner="badge">Clinicians' Choice badge</a>
       <a href="?banner=banner" data-banner="banner">Brand banner</a>
+      <a href="?banner=quant" data-banner="quant">Embedded badge (3852)</a>
     </div>
     <span class="readout" id="readout"></span>
   </nav>
@@ -45,7 +46,7 @@
             </div>
           </div>
 
-          <!-- FrontrowMD — live embeds. Only one loads per page (test bar "Banner:" switch, ?banner=badge|banner),
+          <!-- FrontrowMD — live embeds. Only one loads per page (test bar "Banner:" switch, ?banner=badge|banner|quant),
                since both share FrontrowMD's modal script. -->
           <div class="frontrow-row" id="frontrow-row">
             <template data-banner="badge">
@@ -53,6 +54,13 @@
               <div id="frontrow-badge">
                 <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=brand&amp;product_id=3845"></script>
                 <iframe class="iframe-frontrow" id="iframe-frontrow-brand" title="FrontrowMD Clinicians' Choice Badge" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=brand&amp;product_id=3845"></iframe>
+              </div>
+            </template>
+            <template data-banner="quant">
+              <!-- Clinicians' Choice Embedded Badge (quant, product_id=3852) — FrontrowMD dashboard code, this product's branch only -->
+              <div id="frontrow-badge">
+                <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=quant&amp;product_id=3852"></script>
+                <iframe class="iframe-frontrow" id="iframe-frontrow-quant" title="FrontrowMD Clinicians' Choice Badge" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=quant&amp;product_id=3852"></iframe>
               </div>
             </template>
             <template data-banner="banner">

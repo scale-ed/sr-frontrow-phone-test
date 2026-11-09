@@ -1,8 +1,8 @@
 /* Mockup host for the FrontrowMD embeds.
-   Test-bar controls: which banner to load (?banner=badge|banner) and the width readout. */
+   Test-bar controls: which banner to load (?banner=badge|banner|quant) and the width readout. */
 (function () {
   var params = new URLSearchParams(location.search);
-  var banner = params.get('banner') === 'banner' ? 'banner' : 'badge';
+  var banner = ['banner', 'quant'].indexOf(params.get('banner')) > -1 ? params.get('banner') : 'badge';
 
   // Keep the banner option when switching products.
   document.querySelectorAll('a[data-keep-params]').forEach(function (a) {
