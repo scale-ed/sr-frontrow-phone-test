@@ -20,6 +20,7 @@
       <a href="?banner=badge" data-banner="badge">Clinicians' Choice badge</a>
       <a href="?banner=banner" data-banner="banner">Brand banner</a>
       <a href="?banner=quant" data-banner="quant">Embedded badge (3852)</a>
+      <a href="?banner=sticker" data-banner="sticker">Product banner (3852)</a>
     </div>
     <span class="readout" id="readout"></span>
   </nav>
@@ -46,7 +47,7 @@
             </div>
           </div>
 
-          <!-- FrontrowMD — live embeds. Only one loads per page (test bar "Banner:" switch, ?banner=badge|banner|quant),
+          <!-- FrontrowMD — live embeds. Only one loads per page (test bar "Banner:" switch, ?banner=badge|banner|quant|sticker),
                since both share FrontrowMD's modal script. -->
           <div class="frontrow-row" id="frontrow-row">
             <template data-banner="badge">
@@ -61,6 +62,13 @@
               <div id="frontrow-badge">
                 <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=quant&amp;product_id=3852"></script>
                 <iframe class="iframe-frontrow" id="iframe-frontrow-quant" title="FrontrowMD Clinicians' Choice Badge" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=quant&amp;product_id=3852"></iframe>
+              </div>
+            </template>
+            <template data-banner="sticker">
+              <!-- Clinicians' Choice Banner Badge (sticker, product_id=3852) — FrontrowMD dashboard "Banner" code, this product's branch only -->
+              <div class="frontrow-sticker-slot">
+                <script async type="text/javascript" src="https://app.thefrontrowhealth.com/api/widgets/script?presentation_type=sticker&amp;product_id=3852"></script>
+                <iframe data-state="max" class="iframe-frontrow-sticker" id="frontrow-sticker" title="FrontrowMD Clinicians' Choice Banner" frameborder="0" src="https://app.thefrontrowhealth.com/api/widgets?presentation_type=sticker&amp;product_id=3852"></iframe>
               </div>
             </template>
             <template data-banner="banner">
